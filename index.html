@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EventHOI: Event-Driven Energy-Efficient Hand-Object Interaction Logging on Smartglasses</title>
+  <meta name="description" content="EventHOI is an event-driven hand-object interaction (HOI) detection and compression system that enables energy-efficient RGB sampling and HOI-aware encoding on smartglasses.">
+  <meta name="robots" content="noindex">
+  <meta property="og:title" content="EventHOI">
+  <meta property="og:description" content="Event-Driven Energy-Efficient Hand-Object Interaction Logging on Smartglasses">
+  <meta property="og:image" content="static/img/poster.jpg">
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="badge">Under double-blind review</p>
+    <h1><span class="name">EventHOI</span>: Event-Driven Energy-Efficient Hand-Object Interaction Logging on <span class="glasses">Smartglasses</span></h1>
+    <p class="authors">Anonymous Authors</p>
+    <nav class="links">
+      <a class="btn" href="#video">Video</a>
+      <a class="btn" href="#abstract">Abstract</a>
+      <span class="btn disabled" title="Released after review">Paper (after review)</span>
+      <span class="btn disabled" title="Released after review">Code (after review)</span>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section id="video">
+    <div class="video">
+      <video controls playsinline preload="metadata" poster="static/img/poster.jpg">
+        <source src="static/video/eventhoi_demo.mp4" type="video/mp4">
+        Your browser does not play MP4 video. <a href="static/video/eventhoi_demo.mp4">Download the video</a>.
+      </video>
+    </div>
+  </section>
+
+  <section class="stats" aria-label="Key results">
+    <div class="stat"><b>5.8–10.4×</b><span>lower always-on backend power</span></div>
+    <div class="stat"><b>3.0×</b><span>lower uplink bandwidth</span></div>
+    <div class="stat"><b>1.5–3.8×</b><span>fewer RGB frames captured</span></div>
+    <div class="stat"><b>&lt;1%</b><span>HOI recognition accuracy loss</span></div>
+  </section>
+
+  <section id="abstract">
+    <h2>Abstract</h2>
+    <p>Hand–object interactions (HOIs) are fundamental units of everyday human activities, capturing how people
+      manipulate objects during daily routines. Automatically logging these interactions from an egocentric
+      perspective can provide time-stamped evidence of daily actions, enabling applications such as memory
+      assistance. However, practical HOI logging on smartglasses remains challenging because continuous RGB capture
+      and wireless transmission exceed wearable energy and bandwidth budgets.</p>
+    <p>We present <b>EventHOI</b>, an event-driven HOI detection and compression system that enables
+      energy-efficient RGB sampling and HOI-aware encoding on smartglasses while preserving downstream HOI logging
+      performance. EventHOI uses low-power event sensing as an always-on sentinel to detect HOI motions and trigger
+      RGB sensing only when HOIs likely occur. A lightweight IMU-based egomotion cancellation pipeline suppresses
+      spurious head-induced events. EventHOI further identifies HOI saliency regions from residual events to guide
+      spatial–temporal compression for efficient transmission and VLM-based HOI logging.</p>
+    <p>We build a smartglasses prototype, implement the end-to-end pipeline, and collect 10 hours of real-world
+      data across multiple users, activities, and environments. On this real-world testbed and a 50-hour egocentric
+      dataset, EventHOI reduces always-on backend power by 5.8–10.4×, uplink bandwidth by 3.0×, and RGB capture
+      by 1.5–3.8× compared to RGB-only baselines, with minimal HOI recognition accuracy loss.</p>
+  </section>
+
+  <section id="method">
+    <h2>How EventHOI works</h2>
+    <figure class="wide">
+      <img src="static/img/overview.png" alt="EventHOI system overview: IMU-based egomotion cancellation produces an HOI saliency map from event frames; a distractor filter feeds an HOI detector that triggers the RGB camera and an HOI encoder that compresses frames for a BLE uplink to a cloud VLM.">
+      <figcaption>System overview.</figcaption>
+    </figure>
+    <div class="steps">
+      <article>
+        <h3><span>1</span> Egomotion cancellation</h3>
+        <p>Head motion makes the whole event frame light up even when nothing is touched. EventHOI integrates the
+          gyroscope into a rotation-induced motion field and subtracts it from the event optical flow, so the
+          residual flow isolates hand–object interaction.</p>
+      </article>
+      <article>
+        <h3><span>2</span> HOI detection</h3>
+        <p>Magnitude (top-<i>k</i>, absolute) and connected-component filters remove background distractions such
+          as lighting changes and bystanders. The denoised HOI map triggers the RGB camera at 1&nbsp;FPS only
+          while an interaction is under way, with a low-FPS fallback.</p>
+      </article>
+      <article>
+        <h3><span>3</span> HOI-aware compression</h3>
+        <p>The same map marks where the hands interact. The encoder keeps that region and compresses the rest, so
+          frames fit a Bluetooth Low Energy uplink (&lt;&nbsp;0.3&nbsp;Mbps) to a cloud VLM for HOI logging.</p>
+      </article>
+    </div>
+    <figure class="narrow">
+      <img src="static/img/filters.png" alt="Filters applied to residual optical flow: orange boxes mark flow removed by the top-k and absolute filters, red boxes mark isolated flow removed by the connected-component filter, and green boxes mark the valid HOI region that is kept.">
+      <figcaption>Applying the filters to residual optical flow. Orange: flow too small (top-<i>k</i> and absolute
+        filters); red: isolated flow (connected components); green: kept as the HOI region.</figcaption>
+    </figure>
+  </section>
+
+  <section id="prototype">
+    <h2>Prototype and dataset</h2>
+    <figure class="wide">
+      <img src="static/img/prototype.png" alt="Smartglasses prototype: a 3D-printed frame carrying an RGB camera (IMX708), an event camera (GENX320) and an IMU (LSM6DS3), worn with a Raspberry Pi 4 data collector and a battery; front and side views of a wearer with the face pixelated.">
+      <figcaption>Smartglasses prototype for data collection: (a) the glasses, (b) front and (c) side views when worn.</figcaption>
+    </figure>
+    <p>The prototype carries an RGB camera, an event camera, and an IMU on a 3D-printed frame, with a Raspberry Pi 4
+      collecting the data. With it we recorded a 10-hour real-world dataset of daily activities: working, cooking,
+      leisure, recreation, housework, and eating. We also evaluate on a 50-hour egocentric dataset.</p>
+  </section>
+
+  <section id="results">
+    <h2>Results</h2>
+    <figure class="wide">
+      <img src="static/img/power.png" alt="Power breakdown for Uniform, YOLO and EventHOI. Always-on backend power is 0.70 W, 1.25 W and 0.12 W, a 5.8 to 10.4 times reduction.">
+      <figcaption>Power consumption breakdown. Always-on backend: 0.70&nbsp;W (Uniform), 1.25&nbsp;W (YOLO),
+        0.12&nbsp;W (EventHOI).</figcaption>
+    </figure>
+    <figure class="wide">
+      <img src="static/img/testbed.png" alt="Effective FPS, uplink bandwidth and accuracy per scenario on the real-world testbed for Uniform, EventHOI-Mono and EventHOI-EVS.">
+      <figcaption>Effective FPS, uplink bandwidth, and HOI accuracy per scenario on the real-world testbed.</figcaption>
+    </figure>
+  </section>
+
+  <section id="bibtex">
+    <h2>BibTeX</h2>
+    <pre><code>@inproceedings{eventhoi,
+  title  = {EventHOI: Event-Driven Energy-Efficient Hand-Object Interaction Logging on Smartglasses},
+  author = {Anonymous Authors},
+  note   = {Under review}
+}</code></pre>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <p>This page is anonymized for double-blind review.</p>
+</footer>
+
+</body>
+</html>
