@@ -40,9 +40,9 @@
 
   <section class="stats" aria-label="Key results">
     <div class="stat"><b>5.8–10.4×</b><span>lower always-on backend power</span></div>
-    <div class="stat"><b>3.0×</b><span>lower uplink bandwidth</span></div>
-    <div class="stat"><b>1.5–3.8×</b><span>fewer RGB frames captured</span></div>
-    <div class="stat"><b>&lt;1%</b><span>HOI recognition accuracy loss</span></div>
+    <div class="stat"><b>2.9×</b><span>lower uplink bandwidth</span></div>
+    <div class="stat"><b>2.0–2.4×</b><span>fewer RGB frames captured</span></div>
+    <div class="stat"><b>&le;1.2%</b><span>HOI recognition accuracy loss</span></div>
   </section>
 
   <section id="abstract">
@@ -58,10 +58,10 @@
       RGB sensing only when HOIs likely occur. A lightweight IMU-based egomotion cancellation pipeline suppresses
       spurious head-induced events. EventHOI further identifies HOI saliency regions from residual events to guide
       spatial–temporal compression for efficient transmission and VLM-based HOI logging.</p>
-    <p>We build a smartglasses prototype, implement the end-to-end pipeline, and collect 10 hours of real-world
-      data across multiple users, activities, and environments. On this real-world testbed and a 50-hour egocentric
-      dataset, EventHOI reduces always-on backend power by 5.8–10.4×, uplink bandwidth by 3.0×, and RGB capture
-      by 1.5–3.8× compared to RGB-only baselines, with minimal HOI recognition accuracy loss.</p>
+    <p>We build a smartglasses prototype, implement the end-to-end pipeline, and collect 20 hours of real-world
+      data from 10 participants across multiple activities and environments. On this real-world testbed and a 50-hour egocentric
+      dataset, EventHOI reduces always-on backend power by 5.8–10.4×, uplink bandwidth by 2.9×, and RGB capture
+      by 2.0–2.4× compared to RGB-only baselines, with minimal HOI recognition accuracy loss.</p>
   </section>
 
   <section id="method">
