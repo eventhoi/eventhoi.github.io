@@ -103,20 +103,20 @@
       <figcaption>Smartglasses prototype for data collection: (a) the glasses, (b) front and (c) side views when worn.</figcaption>
     </figure>
     <p>The prototype carries an RGB camera, an event camera, and an IMU on a 3D-printed frame, with a Raspberry Pi 4
-      collecting the data. With it we recorded a 10-hour real-world dataset of daily activities: working, cooking,
+      collecting the data. With it we recorded a 20-hour real-world dataset from 10 participants of daily activities: working, cooking,
       leisure, recreation, housework, and eating. We also evaluate on a 50-hour egocentric dataset.</p>
   </section>
 
   <section id="results">
     <h2>Results</h2>
     <figure class="wide">
-      <img src="static/img/power.png" alt="Power breakdown for Uniform, YOLO and EventHOI. Always-on backend power is 0.70 W, 1.25 W and 0.12 W, a 5.8 to 10.4 times reduction.">
+      <img src="static/img/power.png" alt="Power breakdown for Uniform, YOLO and EventHOI: always-on sensor, detection algorithm, uplink and always-on backend, plus weighted and total power on Nymeria and the real-world testbed. Always-on backend power is 0.70 W, 1.25 W and 0.12 W, a 5.8 to 10.4 times reduction.">
       <figcaption>Power consumption breakdown. Always-on backend: 0.70&nbsp;W (Uniform), 1.25&nbsp;W (YOLO),
         0.12&nbsp;W (EventHOI).</figcaption>
     </figure>
     <figure class="wide">
-      <img src="static/img/testbed.png" alt="Effective FPS, uplink bandwidth and accuracy per scenario on the real-world testbed for Uniform, EventHOI-Mono and EventHOI-EVS.">
-      <figcaption>Effective FPS, uplink bandwidth, and HOI accuracy per scenario on the real-world testbed.</figcaption>
+      <img src="static/img/testbed.png" alt="Effective FPS, uplink bandwidth and HOI accuracy on the real-world testbed for Uniform and EventHOI, per participant (P1 to P10) and per scenario with the scenario-weighted average.">
+      <figcaption>Effective FPS, uplink bandwidth, and HOI accuracy on the real-world testbed: (a) per participant, (b) per scenario and scenario-weighted.</figcaption>
     </figure>
   </section>
 
